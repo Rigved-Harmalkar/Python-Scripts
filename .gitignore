@@ -1,0 +1,19 @@
+# created by virtualenv automatically
+venv/
+*.venv/
+*.pyc
+*.pyo
+*.py[cod]
+*.idea/
+__pycache__/
+
+test/
+download/
+
+# Other temporary files
+*.swp
+*.bak
+*.tmp
+
+# pyenv configuration (if using pyenv)
+pyenv.cfg

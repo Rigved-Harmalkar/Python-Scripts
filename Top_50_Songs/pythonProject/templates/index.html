@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Billboard Top 50</title>
+    <script>
+        function toggleSelectAll(source) {
+            const checkboxes = document.querySelectorAll('input[type="checkbox"].song-checkbox');
+            checkboxes.forEach(checkbox => checkbox.checked = source.checked);
+        }
+
+        async function downloadSongs() {
+            const selectedSongs = [];
+            document.querySelectorAll('input[type="checkbox"]:checked.song-checkbox').forEach(checkbox => {
+                selectedSongs.push(checkbox.value);
+            });
+
+            const response = await fetch("/download", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ songs: selectedSongs })
+            });
+
+            const result = await response.json();
+            alert(result.message);
+        }
+    </script>
+</head>
+<body>
+    <h1>Billboard Top 50 Songs</h1>
+    <form id="songsForm">
+        <!-- Select All Option -->
+        <label>
+            <input type="checkbox" id="selectAll" onclick="toggleSelectAll(this)">
+            Select All
+        </label>
+        <ul>
+            {% for song in songs %}
+                <li>
+                    <input type="checkbox" id="{{ loop.index }}" value="{{ song }}" class="song-checkbox">
+                    <label for="{{ loop.index }}">{{ song }}</label>
+                </li>
+            {% endfor %}
+        </ul>
+        <br><br>
+        <!-- Download Button -->
+        <button type="button" onclick="downloadSongs()">Download Selected Songs</button>
+    </form>
+</body>
+</html>
