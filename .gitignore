@@ -6,7 +6,7 @@ venv/
 *.py[cod]
 *.idea/
 __pycache__/
-
+.env
 test/
 download/
 
